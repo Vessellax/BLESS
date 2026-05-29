@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLESS — Baby Language Exposure Software Service</title>
+  <meta name="description" content="The first audio library built for the first four years. Screen-free. Real human voices. Join the waitlist.">
+  <meta property="og:title" content="BLESS — Language begins before words do.">
+  <meta property="og:description" content="Screen-free audio for babies ages 0–4. Real voices, real language, no screens.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #2A4A35;
+      --cream: #F7F3EE;
+      --black: #161616;
+      --sage:  #8BAA94;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--black);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    /* Ambient orb */
+    .bg-orb {
+      position: fixed;
+      top: -20%;
+      right: -10%;
+      width: 50vw;
+      height: 70vh;
+      background: radial-gradient(ellipse at 40% 40%, rgba(42,74,53,0.07) 0%, transparent 70%);
+      border-radius: 45% 55% 60% 40% / 50% 40% 60% 50%;
+      pointer-events: none;
+      animation: breathe 10s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%,100% { transform: scale(1) rotate(0deg); }
+      50%      { transform: scale(1.06) rotate(4deg); }
+    }
+
+    /* Center card */
+    .card {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 560px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.5em;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: rise 0.8s 0.1s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.08;
+      color: var(--green);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: rise 0.9s 0.2s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    h1 em { font-style: italic; }
+
+    .sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(22,22,22,0.55);
+      line-height: 1.6;
+      max-width: 38ch;
+      margin-bottom: 2.8rem;
+      opacity: 0;
+      animation: rise 0.9s 0.3s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    /* Form */
+    .form-wrap {
+      width: 100%;
+      max-width: 420px;
+      opacity: 0;
+      animation: rise 0.9s 0.45s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    .waitlist-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .name-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .waitlist-form input {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      background: #fff;
+      border: 1.5px solid rgba(42,74,53,0.18);
+      border-radius: 3px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      box-shadow: 0 2px 8px rgba(42,74,53,0.06);
+    }
+
+    .waitlist-form input::placeholder { color: rgba(22,22,22,0.3); }
+    .waitlist-form input:focus { border-color: var(--green); }
+
+    .waitlist-form button {
+      width: 100%;
+      padding: 0.9rem 1.4rem;
+      background: var(--green);
+      color: var(--cream);
+      border: none;
+      border-radius: 3px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 16px rgba(42,74,53,0.18);
+      margin-top: 0.2rem;
+    }
+
+    .waitlist-form button:hover  { background: #1d3526; }
+    .waitlist-form button:active { transform: scale(0.98); }
+    .waitlist-form button:disabled { opacity: 0.6; cursor: default; }
+
+    .form-note {
+      margin-top: 0.85rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      color: rgba(22,22,22,0.32);
+    }
+
+    .success-msg {
+      display: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--green);
+      margin-top: 0.5rem;
+      animation: rise 0.6s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    /* Tagline */
+    .tagline {
+      position: fixed;
+      bottom: 2rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(42,74,53,0.85);
+      opacity: 0;
+      animation: rise 1s 0.7s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 380px) {
+      .name-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-orb" aria-hidden="true"></div>
+
+  <div class="card">
+    <p class="wordmark">BLESS</p>
+
+    <h1>Language begins <em>before</em><br>words do.</h1>
+
+    <p class="sub">Screen-free audio for babies ages 0–4.<br>Real voices. Real language. No screens.</p>
+
+    <div class="form-wrap">
+      <form class="waitlist-form" id="waitlistForm" novalidate>
+        <div class="name-row">
+          <input
+            type="text"
+            id="firstNameInput"
+            placeholder="First name"
+            autocomplete="given-name"
+            required
+            aria-label="First name"
+          />
+          <input
+            type="text"
+            id="lastNameInput"
+            placeholder="Last name"
+            autocomplete="family-name"
+            required
+            aria-label="Last name"
+          />
+        </div>
+        <input
+          type="email"
+          id="emailInput"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required
+          aria-label="Email address"
+        />
+        <button type="submit">Join the Waitlist</button>
+      </form>
+      <p class="form-note" id="formNote">No spam. Early access when we launch.</p>
+      <p class="success-msg" id="successMsg">You're on the list. We'll be in touch.</p>
+    </div>
+  </div>
+
+  <p class="tagline">Screen-free &nbsp;·&nbsp; Real voices &nbsp;·&nbsp; Ages 0–4</p>
+
+  <script>
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzNY6RtJQcMEeDLSbXb6ZXknfR04VxJV96Buqpasf7xIj8UV6DowrBK-FDIrZS3dg/exec';
+
+    document.getElementById('waitlistForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const firstName = document.getElementById('firstNameInput').value.trim();
+      const lastName  = document.getElementById('lastNameInput').value.trim();
+      const email     = document.getElementById('emailInput').value.trim();
+      if (!firstName || !email) return;
+
+      const btn = this.querySelector('button');
+      btn.textContent = 'Joining...';
+      btn.disabled = true;
+
+      try {
+        await fetch(SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (err) {
+        console.error('Submission error:', err);
+      }
+
+      this.style.display = 'none';
+      document.getElementById('formNote').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
